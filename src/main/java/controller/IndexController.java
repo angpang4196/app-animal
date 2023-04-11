@@ -9,19 +9,34 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import data.animal.AnimalResponse;
+import data.sido.SidoResponse;
 import util.AnimalAPI;
+import util.SidoAPI;
 
 @WebServlet("/index")
-public class IndexController extends HttpServlet{
-	
+public class IndexController extends HttpServlet {
+
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		AnimalResponse animalResponse = AnimalAPI.getAnimals();
+		SidoResponse sidoResponse =SidoAPI.getSidos();
+		if(sidoResponse != null) {
+			req.setAttribute("sidos", sidoResponse.getBody().getItems().getItem());
+		}
 		
-		req.setAttribute("datas", animalResponse.getBody().getItems().getItem());
-		req.setAttribute("total", animalResponse.getBody().getTotalCount());
+		// 축종코드 : 개 >>> "417000", 고양이 >>> "422400", 기타 >>> "429900"
+		String upkind = req.getParameter("upkind");
+		String upr_cd = req.getParameter("upr_cd");
+		String pageNo = req.getParameter("pageNo");
+
+		AnimalResponse animalResponse = AnimalAPI.getAnimals(upkind, upr_cd, pageNo);
+
 		
+		if (animalResponse != null) {
+			req.setAttribute("datas", animalResponse.getBody().getItems().getItem());
+			req.setAttribute("total", animalResponse.getBody().getTotalCount());
+		}
+
 		req.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
 	}
 
