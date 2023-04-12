@@ -1,5 +1,7 @@
 package data.animal;
 
+import java.util.Date;
+
 public class AnimalItem {
 
 	String desertionNo;

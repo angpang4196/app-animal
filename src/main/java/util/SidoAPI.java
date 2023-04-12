@@ -5,22 +5,28 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.gson.Gson;
 
-import data.sido.SidoItem;
 import data.sido.SidoResponse;
 import data.sido.SidoResponseResult;
 
 public class SidoAPI {
-	
+
 	public synchronized static SidoResponse getSidos() {
 
 		try {
 
 			String target = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/sido";
+			
+			Map<String, String> params = new HashMap<>();
+			params.put("serviceKey", "pn%2BYJ4SQX3S%2B%2FgbKi30JDEXj5Wqo2HYKhhKbzU1dC9d3NcSrmyo1a4WAbD72FlI0g2dPY%2B7ngYVX7i0gmvp5pw%3D%3D");
+			params.put("_type", "json");
+			params.put("numOfRows", "17");
 
-			String queryString = "serviceKey=pn%2BYJ4SQX3S%2B%2FgbKi30JDEXj5Wqo2HYKhhKbzU1dC9d3NcSrmyo1a4WAbD72FlI0g2dPY%2B7ngYVX7i0gmvp5pw%3D%3D&_type=json&numOfRows=17";
+			String queryString = QueryStringBuilder.build(params);
 
 			URI uri = new URI(target + "?" + queryString);
 
@@ -36,11 +42,6 @@ public class SidoAPI {
 
 			Gson gson = new Gson();
 			SidoResponseResult responseResult = gson.fromJson(response.body(), SidoResponseResult.class);
-			
-			 SidoItem[] item = responseResult.getResponse().getBody().getItems().getItem();
-			 for(SidoItem i : item) {
-				 System.out.println(i);
-			 }
 
 			return responseResult.getResponse();
 
