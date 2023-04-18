@@ -10,13 +10,20 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 
+import data.animal.AnimalItem;
 import data.animal.AnimalResponse;
 import data.animal.AnimalResponseResult;
 
 public class AnimalAPI {
+	
+	private static Map<String, AnimalItem> cache;
+	static {
+		cache = new HashMap<>();
+	}
 
 	// OPEN API 연동해서 데이터 받아오고 파싱해서 컨트롤러로 전송.
-	public synchronized static AnimalResponse getAnimals(String upkind, String upr_cd, String pageNo, String bgnde, String endde) {
+	public synchronized static AnimalResponse getAnimals(String upkind, String upr_cd, String pageNo, String bgnde,
+			String endde) {
 
 		try {
 
@@ -24,17 +31,18 @@ public class AnimalAPI {
 
 			Map<String, String> params = new HashMap<>();
 			params.put("_type", "json");
-			params.put("serviceKey", "pn%2BYJ4SQX3S%2B%2FgbKi30JDEXj5Wqo2HYKhhKbzU1dC9d3NcSrmyo1a4WAbD72FlI0g2dPY%2B7ngYVX7i0gmvp5pw%3D%3D");
+			params.put("serviceKey",
+					"pn%2BYJ4SQX3S%2B%2FgbKi30JDEXj5Wqo2HYKhhKbzU1dC9d3NcSrmyo1a4WAbD72FlI0g2dPY%2B7ngYVX7i0gmvp5pw%3D%3D");
 			params.put("numOfRows", "12");
-			
+
 			params.put("upkind", upkind == null ? "" : upkind);
 			params.put("upr_cd", upr_cd == null ? "" : upr_cd);
 			params.put("pageNo", pageNo == null ? "1" : pageNo);
 			params.put("bgnde", bgnde == null ? "" : bgnde);
 			params.put("endde", endde == null ? "" : endde);
-			
+
 			String queryString = QueryStringBuilder.build(params);
-			System.out.println(queryString);
+
 			URI uri = new URI(target + "?" + queryString);
 
 			// HttpRequest 객체를 활용하는 방식
@@ -49,6 +57,11 @@ public class AnimalAPI {
 
 			Gson gson = new Gson();
 			AnimalResponseResult responseResult = gson.fromJson(response.body(), AnimalResponseResult.class);
+			
+			for(AnimalItem one : responseResult.getResponse().getBody().getItems().getItem()) {
+				cache.put(one.getDesertionNo(), one);
+			}
+//			System.out.println("[SERVER] cache size : " + cache.size());
 
 			return responseResult.getResponse();
 
@@ -56,5 +69,11 @@ public class AnimalAPI {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public static AnimalItem findByDesertionNo(String no) {
+
+		return cache.get(no);
+
 	}
 }
