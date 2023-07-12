@@ -23,7 +23,6 @@ public class AddressAPI {
 		try {
 
 			String target = "http://dapi.kakao.com/v2/local/search/address";
-			System.out.println(URLEncoder.encode(query, "utf-8"));
 
 			String queryString = "query=" + URLEncoder.encode(query, "utf-8");
 

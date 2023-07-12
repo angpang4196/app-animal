@@ -13,6 +13,20 @@
 </style>
 </head>
 <body style="margin: 0">
+	<div>
+		<table>
+			<tr>
+				<td>날짜</td>
+				<td>발생건수</td>
+			</tr>
+			<c:forEach var="i" begin="0" end="4">
+				<tr>
+					<td>${labelsData[i]}</td>
+					<td>${countsData[i]}</td>
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
 	<div style="text-align: center">
 		<div style="max-height: 400px; display: flex; justify-content: center">
 			<canvas id="myChart"></canvas>
@@ -23,7 +37,7 @@
 		const ctx = document.querySelector('#myChart');
 
 		new Chart(ctx, {
-  			type: 'bar',
+  			type: 'line',
     		data: {
       			labels: ${labels},
       			datasets: [{

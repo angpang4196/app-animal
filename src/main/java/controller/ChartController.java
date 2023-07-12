@@ -30,9 +30,11 @@ public class ChartController extends HttpServlet {
 			de.add(s);
 		}
 		Collections.reverse(de);
+
 		Gson gson = new Gson();
 
 		req.setAttribute("labels", gson.toJson(de));
+		req.setAttribute("labelsData", de);
 		List<Integer> counts = new ArrayList<>();
 		for (String d : de) {
 			AnimalResponse response = AnimalAPI.getAnimals(null, null, null, d, d);
@@ -40,6 +42,7 @@ public class ChartController extends HttpServlet {
 			counts.add(total);
 		}
 		req.setAttribute("counts", gson.toJson(counts));
+		req.setAttribute("countsData", counts);
 
 		req.getRequestDispatcher("/WEB-INF/views/chart.jsp").forward(req, resp);
 

@@ -45,7 +45,7 @@ input, select, button {
 			</form>
 			<div style="text-align: right">
 				<c:forEach begin="1" end="${10 }" var="p">
-					<a href="/?pageNo=${p }">${p }</a>
+					<a href="/index?pageNo=${p }">${p }</a>
 				</c:forEach>
 			</div>
 		</div>
