@@ -1,7 +1,7 @@
 # app_animal
 Organic Animals Check Web Application (Backend)
 <div align=center>
-	<img src="https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section=header&text=쇼핑%20웹%20어플리케이션!&fontSize=90" />	
+	<img src="https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section=header&text=유기동물%20조회%20웹%20어플리케이션!&fontSize=60" />	
 </div>
 <div align=center>
 	<h3>📚 Tech Stack 📚</h3>
