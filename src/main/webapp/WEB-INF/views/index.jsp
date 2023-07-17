@@ -79,8 +79,6 @@ input, select, button {
 				</div>
 			</c:forEach>
 		</div>
-
-
 	</div>
 </body>
 </html>
