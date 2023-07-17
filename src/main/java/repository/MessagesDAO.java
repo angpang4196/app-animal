@@ -20,13 +20,12 @@ import data.vo.Message;
 public class MessagesDAO extends DAO {
 
 	// 데이터 등록을 처리할 method
-	public static int createMessage(String target, String body, String pass) {
+	public static int createMessage(String target, String body) {
 
 		SqlSession session = factory.openSession(true);
 		Map<String, String> obj = new HashMap<>();
 		obj.put("target", target);
 		obj.put("body", body);
-		obj.put("pass", pass);
 
 		int r = session.insert("messages.create", obj);
 		

@@ -14,10 +14,10 @@
 			<transactionManager type="JDBC" />
 			<dataSource type="POOLED">
 				<property name="driver"
-					value="oracle.jdbc.driver.OracleDriver" />
+					value="com.mysql.cj.jdbc.Driver" />
 				<property name="url"
-					value="jdbc:oracle:thin:@3.34.136.30:1521:xe" />
-				<property name="username" value="C##MASTER" />
+					value="jdbc:mysql://angpang.cje85ay4qhn5.ap-northeast-2.rds.amazonaws.com/app_animal" />
+				<property name="username" value="admin" />
 				<property name="password" value="1q2w3e4r" />
 			</dataSource>
 		</environment>

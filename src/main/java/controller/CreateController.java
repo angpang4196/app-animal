@@ -20,9 +20,8 @@ public class CreateController extends HttpServlet{
 		
 		String target = req.getParameter("target");
 		String body = req.getParameter("body");
-		String pass = req.getParameter("pass");
 		
-		int r = MessagesDAO.createMessage(target, body, pass);
+		int r = MessagesDAO.createMessage(target, body);
 		
 		resp.sendRedirect("/detail?no=" + target);
 	}

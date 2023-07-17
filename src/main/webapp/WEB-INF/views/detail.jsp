@@ -15,6 +15,7 @@
 .badge {
 	background-color: yellow;
 }
+
 .msg {
 	padding: 4px;
 	border: 1px solid #dddddd;
@@ -23,9 +24,13 @@
 </style>
 </head>
 <body style="margin: 0px">
-	<div style="display: flex">
+	<div style="display: flex; padding-left: 300px; padding-right: 300px">
 		<%-- 동물 정보 디스플레이 영역 --%>
 		<div style="flex: 3; padding: 4px;">
+			<div style="background-color: gray ;text-align: center; justify-content: center; height: 30px">
+				<a href="/index"
+					style="text-decoration: none;  color: white;">Home</a>
+			</div>
 			<h2>${item.noticeNo }</h2>
 			<div style="height: 360px; margin-bottom: 4px">
 				<img src="${item.popfile }"
@@ -37,8 +42,10 @@
 			<ul>
 				<li>발견장소 : ${item.orgNm } ${item.happenPlace }</li>
 				<li>특징 : ${item.specialMark }</li>
-				<li>특징 : ${item.specialMark }</li>
 			</ul>
+			<div>
+				<p style="font-size: 15px">(마우스 휠로 지도를 확대 또는 축소할 수 있습니다.)</p>
+			</div>
 			<div id="map"
 				style="width: 100%; height: 300px; margin: auto; display: flex; justify-content: center; align-items: center; border: 1px solid #dddddd">
 
@@ -53,25 +60,23 @@
 			</div>
 		</div>
 		<%-- 동물에 대한 코멘트 영역 --%>
-		<div style="flex: 1;">
+		<div style="flex: 1; padding-top: 100px; padding-left: 20px">
 			<div>
-				<form action="/write" method="post">
+				<form action="/create" method="post">
 					<input type="hidden" name="target" value="${item.desertionNo }" />
 					<textarea style="width: 100%; height: 120px; resize: none"
 						name="body"></textarea>
-					<input type="password" name="pass" />
 					<button type="submit">응원하기</button>
 				</form>
 			</div>
 			<div>
 				<h4>
-					응원의 한마디 (  <span id="cnt">${fn:length(messages) }</span>   건) <span id="refresh"
-						style="cursor: pointer;">5</span>초 후 갱신
+					응원의 한마디 ( <span id="cnt">${fn:length(messages) }</span> 건 ) <span
+						id="refresh" style="cursor: pointer;">5</span>초 후 갱신
 				</h4>
 				<div id="messages">
 					<c:forEach items="${messages}" var="m">
-						<div class="msg">
-							${m.body }</div>
+						<div class="msg">${m.body }</div>
 					</c:forEach>
 				</div>
 			</div>
@@ -112,14 +117,14 @@
 	</script>
 	<c:if test="${!empty addr }">
 		<script type="text/javascript"
-			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fa50ba81310359fa007dce1d4eb86753"></script>
+			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=51bdfbf4f2b05c6668e6ca2685213eb3"></script>
 		<script>
 			let pos = new kakao.maps.LatLng(${addr.lng}, ${addr.lat}); //지도의 중심좌표.
 			
 			let container = document.querySelector('#map'); //지도를 담을 영역의 DOM 레퍼런스
 			let options = { //지도를 생성할 때 필요한 기본 옵션
 				center : pos, 
-				level : 4
+				level : 6
 			//지도의 레벨(확대, 축소 정도)
 			};
 	
